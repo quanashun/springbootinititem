@@ -5,8 +5,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import top.ashun.recruit.config.filter.UserInfo;
 import top.ashun.recruit.entity.User;
+import top.ashun.recruit.entity.UserInfo;
 import top.ashun.recruit.mapper.UserMapper;
 import top.ashun.recruit.pojo.vo.UserLoginRespVO;
 

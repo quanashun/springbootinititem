@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import top.ashun.recruit.config.filter.UserInfo;
 import top.ashun.recruit.entity.Administrator;
-import top.ashun.recruit.entity.User;
+import top.ashun.recruit.entity.UserInfo;
 import top.ashun.recruit.mapper.AdministratorMapper;
 import top.ashun.recruit.pojo.dto.UserTokenDTO;
 import top.ashun.recruit.pojo.vo.UserLoginRespVO;
@@ -29,19 +28,19 @@ public class AdministratorServiceImpl extends ServiceImpl<AdministratorMapper, A
 
     public UserLoginRespVO getUserTokenByPassword(String userId, String rawPassword) {
         Administrator user = baseMapper.selectById(userId);
-        if(user != null){
+        if (user != null) {
             //密码匹配成功
-            if(user.getPassword().equals(bCryptPasswordEncoder.encode(rawPassword))) {
+            if (user.getPassword().equals(bCryptPasswordEncoder.encode(rawPassword))) {
                 UserInfo userInfo = new UserInfo();
-                BeanUtils.copyProperties(user,userInfo);
+                BeanUtils.copyProperties(user, userInfo);
                 List<String> roles = baseMapper.getRolesById(userId);
-                return generateResponseVO(userInfo,roles);
+                return generateResponseVO(userInfo, roles);
             }
         }
         return null;
     }
 
-    public UserLoginRespVO generateResponseVO(UserInfo userInfo,List<String> roles){
+    public UserLoginRespVO generateResponseVO(UserInfo userInfo, List<String> roles) {
         UserTokenDTO userTokenDTO = new UserTokenDTO();
         UserLoginRespVO resp = new UserLoginRespVO();
 

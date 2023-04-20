@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import top.ashun.recruit.config.filter.UserInfo;
+import top.ashun.recruit.entity.UserInfo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ public class UserTokenDTO implements Serializable {
     private UserInfo userInfo;
     private List<String> roleList = new ArrayList<>();
     private List<String> permissionsList = new ArrayList<>();
+
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
 

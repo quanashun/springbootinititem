@@ -1,7 +1,7 @@
 package top.ashun.recruit.pojo.vo;
 
 import lombok.Data;
-import top.ashun.recruit.config.filter.UserInfo;
+import top.ashun.recruit.entity.UserInfo;
 
 import java.util.List;
 
