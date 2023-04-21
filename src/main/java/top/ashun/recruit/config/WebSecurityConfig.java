@@ -33,7 +33,7 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS)
                 .permitAll()
-                .antMatchers("/logins/**", "/registers/**", "/test/**").permitAll()
+                .antMatchers("/logins/**", "/registers/**","/captcha/***", "/test/**").permitAll()
                 .antMatchers("/swagger-ui/*", "/swagger-resources/**", "/v2/api-docs", "/v3/api-docs", "/webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

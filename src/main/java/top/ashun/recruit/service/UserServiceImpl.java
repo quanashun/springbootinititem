@@ -11,8 +11,11 @@ import top.ashun.recruit.entity.UserInfo;
 import top.ashun.recruit.mapper.UserMapper;
 import top.ashun.recruit.pojo.vo.Code;
 import top.ashun.recruit.pojo.vo.UserLoginRespVO;
+import top.ashun.recruit.util.captcha.ImageCaptchaUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 18483
@@ -26,6 +29,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> {
     private AdministratorServiceImpl administratorService;
     @Autowired
     private UserRoleServiceImpl userRoleService;
+    @Autowired
+    private ImageCaptchaUtil imageCaptchaUtil;
 
     public UserLoginRespVO getUserTokenByPassword(String userId, String rawPassword) {
         User user = baseMapper.selectById(userId);
@@ -40,5 +45,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> {
         }
         BusinessException.error(Code.USER_LOGIN_ERROR);
         return null;
+    }
+
+    public String registerUser(String phone, String username, String password,String captchaId,String captcha){
+        if(imageCaptchaUtil.verifyCaptcha(captchaId,captcha)){
+            if (isPhoneNotInUse(phone)) {
+                User user = new User();
+                user.setUsername(username);
+                user.setPhone(phone);
+                user.setPassword(bCryptPasswordEncoder.encode(password));
+                baseMapper.insert(user);
+                return "注册成功！";
+            }
+            BusinessException.error(Code.USER_HAS_EXISTED);
+            return null;
+        }
+        return null;
+    }
+
+    public boolean isPhoneNotInUse(String phone) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("phone", phone);
+        List<User> users = baseMapper.selectByMap(map);
+        return users.isEmpty();
     }
 }

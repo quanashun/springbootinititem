@@ -19,3 +19,9 @@ swagger:
 
 #token过期时间（单位：小时）
 tokenTimeOut: 120
+
+
+#是否开启图像验证码（默认：关闭）
+isOpenCaptcha: false
+#图像验证码过期时间（单位：分钟）
+captchaTimeout: 5
