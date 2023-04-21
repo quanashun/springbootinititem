@@ -2,7 +2,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/guns?serverTimezone=Asia/Shanghai # 主
+    url: jdbc:mysql://localhost:3306/recruit?serverTimezone=Asia/Shanghai # 主
     username: root
     password: root
   redis:

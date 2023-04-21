@@ -4,8 +4,6 @@ package top.ashun.recruit.config.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import top.ashun.recruit.pojo.dto.UserTokenDTO;
@@ -36,7 +34,12 @@ public class HttpSecurityFilter extends OncePerRequestFilter {
         // 在这里获取token的用户和权限
         String token = httpServletRequest.getHeader("Authorization");
         if (token != null) {
-            UserTokenDTO userTokenDTO = redisService.getStringValue(token, UserTokenDTO.class);
+            UserTokenDTO userTokenDTO;
+            try {
+                userTokenDTO = redisService.getStringValue(token, UserTokenDTO.class);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
             if (userTokenDTO != null) {
                 log.info(
                         "user id : {} , uri : {} , method : {} , params : {}",

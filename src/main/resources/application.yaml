@@ -17,3 +17,5 @@ spring:
 swagger:
   enabled: true
 
+#token过期时间（单位：小时）
+tokenTimeOut: 120

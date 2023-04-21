@@ -33,7 +33,7 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS)
                 .permitAll()
-                .antMatchers("/login/**", "/register/**", "/test/**").permitAll()
+                .antMatchers("/logins/**", "/registers/**", "/test/**").permitAll()
                 .antMatchers("/swagger-ui/*", "/swagger-resources/**", "/v2/api-docs", "/v3/api-docs", "/webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -43,16 +43,20 @@ public class WebSecurityConfig {
                 .disable()
                 .csrf()
                 .disable()
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler())
+                .authenticationEntryPoint(authenticationEntryPoint())
+                .and()
                 .addFilterBefore(httpSecurityFilter, UsernamePasswordAuthenticationFilter.class)
-        ;
+                .headers().cacheControl();
+
         return httpSecurity.build();
     }
-    @Bean
+
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return new SecurityAuthenticationEntryPoint();
     }
 
-    @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return new SecurityAccessDeniedHandler();
     }

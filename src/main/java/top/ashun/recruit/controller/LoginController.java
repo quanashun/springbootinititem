@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.ashun.recruit.pojo.vo.R;
 import top.ashun.recruit.pojo.vo.UserPasswordLoginVO;
+import top.ashun.recruit.service.AdministratorServiceImpl;
 import top.ashun.recruit.service.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +23,12 @@ public class LoginController {
     @Autowired
     private UserServiceImpl userService;
 
+    @Autowired
+    private AdministratorServiceImpl administratorService;
+
     //普通用户密码登录
     @PostMapping("/userPasswordLogin")
-    public R ordinaryUserLoginByPassword(@RequestBody @Valid UserPasswordLoginVO userPasswordLoginVO, HttpServletRequest request){
+    public R userLoginByPassword(@RequestBody @Valid UserPasswordLoginVO userPasswordLoginVO, HttpServletRequest request) {
         return R.success(userService.getUserTokenByPassword(userPasswordLoginVO.getUsername(), userPasswordLoginVO.getPassword()));
     }
 
@@ -32,7 +36,10 @@ public class LoginController {
 
 
     //管理员密码登录
-
+    @PostMapping("/adminPasswordLogin")
+    public R adminLoginByPassword(@RequestBody @Valid UserPasswordLoginVO userPasswordLoginVO, HttpServletRequest request) {
+        return R.success(administratorService.getUserTokenByPassword(userPasswordLoginVO.getUsername(), userPasswordLoginVO.getPassword()));
+    }
 
     //管理员验证码登录
 
